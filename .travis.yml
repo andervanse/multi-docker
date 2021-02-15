@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t andervanse/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true andervanse/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t andervanse/multi-client ./client
+  - docker build -t andervanse/multi-nginx ./nginx
+  - docker build -t andervanse/multi-server ./server
+  - docker build -t andervanse/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push andervanse/multi-client
+  - docker push andervanse/multi-nginx
+  - docker push andervanse/multi-server
+  - docker push andervanse/multi-worker
