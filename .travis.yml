@@ -20,14 +20,14 @@ after_success:
   - docker push andervanse/multi-worker
 
 
-  deploy:
-    provider: elasticbeanstalk
-    region: 'sa-east-1'
-    app: 'multi-docker'
-    env: 'MultiDocker-env'
-    bucket_name: 'elasticbeanstalk-sa-east-1-469615216345'
-    bucket_path: 'docker-multi'
-    on:
-      branch: master
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
+deploy:
+  provider: elasticbeanstalk
+  region: 'sa-east-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-sa-east-1-469615216345'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
